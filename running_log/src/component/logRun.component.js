@@ -28,49 +28,47 @@ export default function LogRun() {
     const [returnedData, setReturnedData] = useState({RunID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
     const [run, setRun] = useState({RunID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-        title: data.get('title'),
-    });
-  };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        console.log({
+            title: data.get('title'),
+        });
+    };
 
-  const setInput = (e) => {
-    const {name, value} = e.target;
-    console.log(value);
-    if (name === 'EmployeeID' || name === 'Age'){
+    const setInput = (e) => {
+        const {name, value} = e.target;
+        console.log(value);
+        if (name === 'RunID' || name === 'Time' || name === 'Distance' || name === 'Effort'){
+            setRun(prevState => ({
+            ...prevState,
+            [name]: parseInt(value)
+        }));
+        return;
+        }
         setRun(prevState => ({
         ...prevState,
-        [name]: parseInt(value)
-      }));
-      return;
+        [name]: value
+        }));
     }
-    setRun(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  }
 
-  const logRun = async () => {
-    const newData = await fetch('http://localhost:5000/logrun', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        ...run
-      })
-    })
-    .then(res => res.json());
-    console.log(newData);
-    setReturnedData(newData[0]);
-  }
+    const logRun = async () => {
+        const newData = await fetch('http://localhost:5000/logrun', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            ...run
+        })
+        })
+        .then(res => res.json());
+        console.log(newData);
+        setReturnedData(newData[0]);
+    }
 
 
-
-    
     return (
         <ThemeProvider theme={darkTheme}>
             <Container component="main" maxWidth="xs">

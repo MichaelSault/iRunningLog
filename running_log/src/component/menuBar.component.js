@@ -15,6 +15,7 @@ import Menu from '@mui/material/Menu';
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorE2, setAnchorE2] = React.useState(null);
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -28,20 +29,16 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const handleUserMenu = (event) => {
+    setAnchorE2(event.currentTarget);
+  };
+
+  const handleUserClose = () => {
+    setAnchorE2(null);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup> */}
       <AppBar position="static" sx={{ backgroundColor: "RebeccaPurple" }}>
         <Toolbar>
           <IconButton
@@ -55,23 +52,23 @@ export default function MenuAppBar() {
             <MenuIcon />
           </IconButton>
           <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem href="login" component="a" onClick={handleClose}>Login</MenuItem>
-                <MenuItem href="signup" component="a" onClick={handleClose}>SignUp</MenuItem>
-            </Menu>
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem href="login" component="a" onClick={handleClose}>Login</MenuItem>
+              <MenuItem href="signup" component="a" onClick={handleClose}>SignUp</MenuItem>
+          </Menu>
           
           <Typography variant="h6" component="div" sx={{ flexGrow: 1}}>
             iRunningLog
@@ -83,13 +80,32 @@ export default function MenuAppBar() {
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleMenu}
+                onClick={handleUserMenu}
                 color="inherit"
               >
                 <AccountCircle />
               </IconButton>
               
-            </div>
+            
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorE2}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorE2)}
+                onClose={handleUserClose}
+              >
+                <MenuItem href="LogRun" component="a" onClick={handleUserClose}>Log Run</MenuItem>
+                <MenuItem href="Settings" component="a" onClick={handleUserClose}>Settings</MenuItem>
+              </Menu>
+          </div>
           )}
         </Toolbar>
       </AppBar>
