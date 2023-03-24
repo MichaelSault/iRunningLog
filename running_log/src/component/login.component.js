@@ -11,6 +11,7 @@ import DirectionsRunRoundedIcon from '@mui/icons-material/DirectionsRunRounded';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import * as jose from 'jose';
 
 const darkTheme = createTheme({
     palette: {
@@ -29,17 +30,15 @@ const darkTheme = createTheme({
 
 export default function LogIn() {
     const [returnedData, setReturnedData] = useState({RunID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
-
-    //const bcrypt = require('bcrypt');
-    //const jsonwebtoken = require('jsonwebtoken');
     
-    const JWT_SECRET = "runningawaywiththesecretmessage";
+    const JWT_SECRET = new TextEncoder().encode("runningawaywiththesecretmessage");
+    const alg = 'HS256';
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
-            title: data.get('title'),
+            email: data.get('Email'),
         });
     };
 
@@ -60,7 +59,27 @@ export default function LogIn() {
     }
 
     const logIn = async () => {
-        //console.log(jsonwebtoken.sign({user: "user1"}, JWT_SECRET));
+        const secret = jose.base64url.decode('zH4NRP1HMALxxCFnRZABFA7GOJtzU_gIj02alfL1lvI')
+        const jwt = await new jose.EncryptJWT({ 'urn:example:claim': true })
+            .setProtectedHeader({ alg: 'dir', enc: 'A128CBC-HS256' })
+            .setIssuedAt()
+            .setIssuer('urn:example:issuer')
+            .setAudience('urn:example:audience')
+            .setExpirationTime('2h')
+            .encrypt(secret)
+            .payload("test")
+
+        console.log(jwt)
+
+        const { payload, protectedHeader } = await jose.jwtDecrypt(jwt, JWT_SECRET, {
+            issuer: 'urn:example:issuer',
+            audience: 'urn:example:audience',
+        });
+
+        console.log(protectedHeader)
+        console.log(payload)
+
+
     }
 
 
