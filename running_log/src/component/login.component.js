@@ -84,8 +84,6 @@ export default function LogIn() {
 
 
     return (
-        <div className="App">
-        <header className="App-header">
         <ThemeProvider theme={darkTheme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
@@ -143,7 +141,5 @@ export default function LogIn() {
                 </Box>
             </Container>
         </ThemeProvider>
-        </header>
-        </div>
     );
 }
