@@ -25,9 +25,9 @@ const darkTheme = createTheme({
 });
 
 
-
 export default function LogIn() {
     const [returnedData, setReturnedData] = useState({RunID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
+    const [newUser, setNewUser] = useState({Email: '', Password: ''});
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -41,22 +41,33 @@ export default function LogIn() {
         const {name, value} = e.target;
         console.log(value);
         if (name === 'RunID' || name === 'Time' || name === 'Distance' || name === 'Effort'){
-            setReturnedData(prevState => ({
+            setNewUser(prevState => ({
             ...prevState,
             [name]: parseInt(value)
         }));
         return;
         }
-        setReturnedData(prevState => ({
-        ...prevState,
-        [name]: value
+        setNewUser(prevState => ({
+            ...prevState,
+            [name]: value
         }));
     }
 
     const signUp = async () => {
-        //add a function to add user entry into the database
+        const newData = await fetch('http://localhost:5000/createUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                ...newUser
+            })
+        })
+        .then(res => res.json());
+        console.log(newData);
+        setReturnedData(newData[0])
     }
-
 
     return (
         <ThemeProvider theme={darkTheme}>
