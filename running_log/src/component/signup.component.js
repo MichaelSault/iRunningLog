@@ -25,9 +25,9 @@ const darkTheme = createTheme({
 });
 
 
-export default function LogIn() {
-    const [returnedData, setReturnedData] = useState({RunID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
-    const [newUser, setNewUser] = useState({Email: '', Password: ''});
+export default function SignUp() {
+    const [returnedData, setReturnedData] = useState({RunnerID: 0, First: '', Last: '', Email: 0, Display: 0, Password: ""});
+    const [newUser, setNewUser] = useState({RunnerID: 0, First: '', Last: '', Email: 0, Display: 0, Password: ""});
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -66,7 +66,7 @@ export default function LogIn() {
         })
         .then(res => res.json());
         console.log(newData);
-        setReturnedData(newData[0])
+        setReturnedData(newData[0]);
     }
 
     return (
@@ -104,35 +104,23 @@ export default function LogIn() {
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 autoComplete="firstName"
-                                name="FirstName"
+                                name="First"
                                 required
                                 fullWidth
-                                id="FirstName"
-                                label="FirstName"
+                                id="First"
+                                label="First Name"
                                 onChange={setInput}
                             />
                         </Grid>
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 autoComplete="lastName"
-                                name="LastName"
+                                name="Last"
                                 required
                                 fullWidth
-                                id="LastName"
-                                label="LastName"
+                                id="Last"
+                                label="Last Name"
                                 onChange={setInput}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <TextField
-                                autoComplete="username"
-                                name="Username"
-                                required
-                                fullWidth
-                                id="Username"
-                                label="Display Name"
-                                onChange={setInput}
-                                autoFocus
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
@@ -172,6 +160,7 @@ export default function LogIn() {
                         
                     </Grid>
                     <Button
+                    href="LogIn"
                     type="submit"
                     fullWidth
                     variant="contained"

@@ -4,7 +4,8 @@ const config = require('./dbConfig'),
 const createUser = async(NewUserInfo) => {
     try {
         let pool = await sql.connect(config);
-        let newUser = await pool.request().query(`INSERT INTO Runners(First, Last, Email, Display, password) VALUES ('${NewUserInfo.First}', '${NewUserInfo.Last}', '${NewUserInfo.Email}', '${NewUserInfo.Display}', '${NewUserInfo.Password}')`);
+        console.log(NewUserInfo);
+        let newUser = await pool.request().query(`INSERT INTO Runners(First, Last, Email, Display, password) VALUES ('${NewUserInfo.First}', '${NewUserInfo.Last}', '${NewUserInfo.Email}', '${NewUserInfo.Username}', '${NewUserInfo.Password}')`);
         return newUser;
     }
     catch(error) {

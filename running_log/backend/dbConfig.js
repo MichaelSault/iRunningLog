@@ -2,7 +2,7 @@ const config = {
     user: 'Coach',
     password: '2fast2quick',
     server: 'DESKTOP-9GDUEPD',
-    database: 'DataDog',
+    database: 'RunningLog',
     options: {
         trustServerCertificate: true,
         trustedConnection: false,
