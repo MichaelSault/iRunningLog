@@ -28,34 +28,52 @@ const darkTheme = createTheme({
 
 
 export default function LogIn() {
-    const [returnedData, setReturnedData] = useState({RunID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
-    
+    const [returnedData, setReturnedData] = useState({RunnerID: 0, First: '', Last: '', Email: '', Display: ''});
+    const [userCredentials, setUserCredentials] = useState({Email: '', Password: ''});
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
             email: data.get('Email'),
+            password: data.get('Password')
         });
     };
 
     const setInput = (e) => {
         const {name, value} = e.target;
         console.log(value);
-        if (name === 'RunID' || name === 'Time' || name === 'Distance' || name === 'Effort'){
-            setReturnedData(prevState => ({
+        if (name === 'EmployeeID' || name === 'Age'){
+            setUserCredentials(prevState => ({
+              ...prevState,
+              [name]: parseInt(value)
+            }));
+            return;
+          }
+          setUserCredentials(prevState => ({
             ...prevState,
-            [name]: parseInt(value)
-        }));
-        return;
-        }
-        setReturnedData(prevState => ({
-        ...prevState,
-        [name]: value
-        }));
+            [name]: value
+          }));
     }
 
-    function logIn() {
-        const newData = fetch('http://localhost:5000/JWT', {
+    const logIn = async () => {
+        const newData = await fetch('http://localhost:5000/loginUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                ...userCredentials
+            })
+        })
+        .then(res => res.json());
+    }
+
+    function getJWT() {
+        //add check to see if user and pass match
+        const JWT = fetch('http://localhost:5000/JWT', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -63,8 +81,8 @@ export default function LogIn() {
         }
         })
         .then(res => res.json());
-        console.log(newData);
-  }
+        console.log(JWT);
+    }
 
 
     return (

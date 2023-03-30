@@ -70,9 +70,7 @@ export default function SignUp() {
         })
         .then(res => res.json())
         .then(navigate("/login"));
-        console.log(newData);
-        setReturnedData(newData[0]);
-        console.log("did we move?");
+        //setReturnedData(newData[0]);
     }
 
     return (

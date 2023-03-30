@@ -22,4 +22,11 @@ app.post('/createUser', async(req, res) => {
     console.log(result);
 });
 
+app.post('/loginUser', async(req, res) => {
+    const result = await dbOperation.loginUser(req.body);
+    console.log("Returned From Query");
+    console.log(result.recordset[0]);
+    res.send(result.recordset[0]);
+});
+
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
