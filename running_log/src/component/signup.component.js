@@ -12,6 +12,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { useNavigate } from 'react-router-dom';
+
+
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
@@ -28,6 +31,7 @@ const darkTheme = createTheme({
 export default function SignUp() {
     const [returnedData, setReturnedData] = useState({RunnerID: 0, First: '', Last: '', Email: 0, Display: 0, Password: ""});
     const [newUser, setNewUser] = useState({RunnerID: 0, First: '', Last: '', Email: 0, Display: 0, Password: ""});
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -64,9 +68,11 @@ export default function SignUp() {
                 ...newUser
             })
         })
-        .then(res => res.json());
+        .then(res => res.json())
+        .then(navigate("/login"));
         console.log(newData);
         setReturnedData(newData[0]);
+        console.log("did we move?");
     }
 
     return (
@@ -160,7 +166,6 @@ export default function SignUp() {
                         
                     </Grid>
                     <Button
-                    href="LogIn"
                     type="submit"
                     fullWidth
                     variant="contained"
