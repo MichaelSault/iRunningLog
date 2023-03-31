@@ -13,8 +13,12 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
 app.post('/JWT', async(req, res) => {
-    const JasonWebToken = await JWT.getJWT();
-    console.log(JasonWebToken);
+    //console.log("called JWT on server.js");
+    //console.log(req.body.Email);
+    const JasonWebToken = await JWT.getJWT(req.body);
+    console.log("JWT Returned by the function:" + JasonWebToken);
+
+    res.send(JasonWebToken);
 })
 
 app.post('/createUser', async(req, res) => {

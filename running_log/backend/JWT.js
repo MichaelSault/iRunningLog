@@ -26,13 +26,7 @@ const header = {
     typ: 'JWT',
 };
 
-const b64Header = toBase64 (header);
-const jwtB64Header = replaceSpecialChars(b64Header);
-
-console.log ("the header is: ", jwtB64Header); 
-//OUTPUTS the header is: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-
-//generates a sample payload
+/* //generates a sample payload
 const payload = {
     iss: 'data_dog',    //name of the server that issued the token
     exp: 60*60*24,      // sets to expire in 24hours
@@ -41,14 +35,8 @@ const payload = {
     name: 'James Mitchell',
     email: 'jmitchell@mail.com',
     registered: true,
-};
+}; */
 
-// converts payload to base64
-const b64Payload = toBase64 (payload);
-const jwtB64Payload = replaceSpecialChars (b64Payload);
-
-console.log ("the payload is: ", jwtB64Payload);
-//OUTPUTS the payload is:     eyJpc3MiOiJkYXRhX2RvZyIsImV4cCI6ODY0MDAsIm5hbWUiOiJKYW1lcyBNaXRjaGVsbCIsImVtYWlsIjoiam1pdGNoZWxsQG1haWwuY29tIiwicmVnaXN0ZXJlZCI6dHJ1ZX0
 
 //import the crypto module
 const crypto = require('crypto');
@@ -67,18 +55,45 @@ const createSignature = (jwtB64Header, jwtB64Payload, secret) => {
     return signature;
 }
 
-const secret = 'a_secret_to_everyone';
-const signature = createSignature(jwtB64Header, jwtB64Payload, secret);
-console.log("the signature is: ", signature);
-//OUTPUTS the signature is:    bWLt85oF80pZ6QfHF9BjgjvVolR3DD6Mv2ixS47nmHo
 
-//combine all parts into a JWT Token
-const jasonWebToken = jwtB64Header + '.' + jwtB64Payload + '.' + signature;
-console.log("the JWT is: ", jasonWebToken);
-//OUTPUTS the JWT is:    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJkYXRhX2RvZyIsImV4cCI6ODY0MDAsIm5hbWUiOiJKYW1lcyBNaXRjaGVsbCIsImVtYWlsIjoiam1pdGNoZWxsQG1haWwuY29tIiwicmVnaXN0ZXJlZCI6dHJ1ZX0.bWLt85oF80pZ6QfHF9BjgjvVolR3DD6Mv2ixS47nmHo
+const getJWT = async(userData) => {
+    //create the header
+    const b64Header = toBase64 (header);
+    const jwtB64Header = replaceSpecialChars(b64Header);
+    console.log ("the header is: ", jwtB64Header); 
+    //OUTPUTS the header is: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+    
+    //create payload
+    const payload = {
+        iss: 'running_log',    //name of the server that issued the token
+        exp: 60*60*24,      // sets to expire in 24hours
+        
+        //user data
+        RunnerID: userData.RunnerID,
+        First: userData.First,
+        Last: userData.Last,
+        Email: userData.Email,
+        Display: userData.Display,
+        Password: userData.Password,
+        registered: userData.Registered,
+    }
 
-const getJWT = async() => {
-        return(jasonWebToken);
+    // converts payload to base64
+    const b64Payload = toBase64 (payload);
+    const jwtB64Payload = replaceSpecialChars (b64Payload);
+    console.log ("the payload is: ", jwtB64Payload);
+
+    //create signature
+    const secret = 'a_secret_to_everyone';
+    const signature = createSignature(jwtB64Header, jwtB64Payload, secret);
+    console.log("the signature is: ", signature);
+    //OUTPUTS the signature is:    bWLt85oF80pZ6QfHF9BjgjvVolR3DD6Mv2ixS47nmHo
+
+    //combine all parts into a JWT Token
+    const jasonWebToken = jwtB64Header + '.' + jwtB64Payload + '.' + signature;
+    console.log("the JWT is: ", jasonWebToken);
+
+    return(jasonWebToken);
 }
 
 module.exports = {

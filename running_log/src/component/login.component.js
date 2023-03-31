@@ -44,7 +44,7 @@ export default function LogIn() {
     const setInput = (e) => {
         const {name, value} = e.target;
         console.log(value);
-        if (name === 'EmployeeID' || name === 'Age'){
+        if (name === 'RunnerID'){
             setUserCredentials(prevState => ({
               ...prevState,
               [name]: parseInt(value)
@@ -69,19 +69,38 @@ export default function LogIn() {
             })
         })
         .then(res => res.json());
+        console.log("does this work?", newData);
+        setReturnedData(newData);
+        getJWT(newData);
     }
 
-    function getJWT() {
+    function getJWT(newData) {
         //add check to see if user and pass match
-        const JWT = fetch('http://localhost:5000/JWT', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
+        console.log(newData);
+        console.log(userCredentials);
+
+        if ((newData.Email = userCredentials.Email) && (newData.Password = userCredentials.Password)){
+            const JWT = fetch('http://localhost:5000/JWT', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    RunnerID: newData.RunnerID,
+                    First: newData.First,
+                    Last: newData.Last,
+                    Email: newData.Email,
+                    Display: newData.Display,
+                    Password: newData.Password,
+                    Registered: true
+                })
+            })
+            .then(res => res.json());
+            console.log(JWT);
+        } else {
+            console.log("Username and Password Mismatch!");
         }
-        })
-        .then(res => res.json());
-        console.log(JWT);
     }
 
 
