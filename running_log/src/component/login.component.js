@@ -11,6 +11,8 @@ import DirectionsRunRoundedIcon from '@mui/icons-material/DirectionsRunRounded';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 const darkTheme = createTheme({
     palette: {
@@ -31,6 +33,7 @@ export default function LogIn() {
     const [returnedData, setReturnedData] = useState({RunnerID: 0, First: '', Last: '', Email: '', Display: ''});
     const [userCredentials, setUserCredentials] = useState({Email: '', Password: ''});
 
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -74,13 +77,16 @@ export default function LogIn() {
         getJWT(newData);
     }
 
-    function getJWT(newData) {
+    const cookies = new Cookies();
+
+    async function getJWT(newData) {
         //add check to see if user and pass match
         console.log(newData);
         console.log(userCredentials);
+        var JWT = "";
 
         if ((newData.Email = userCredentials.Email) && (newData.Password = userCredentials.Password)){
-            const JWT = fetch('http://localhost:5000/JWT', {
+            JWT = await fetch('http://localhost:5000/JWT', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -96,11 +102,14 @@ export default function LogIn() {
                     Registered: true
                 })
             })
-            .then(res => res.json());
+            .then(res => res.text());
             console.log(JWT);
+            cookies.set("user-authentication", JWT);
+            navigate("/logrun");
         } else {
             console.log("Username and Password Mismatch!");
         }
+        console.log(JWT);
     }
 
 
