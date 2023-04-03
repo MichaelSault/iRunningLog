@@ -27,8 +27,6 @@ const darkTheme = createTheme({
 });
 
 
-
-
 export default function LogIn() {
     const [returnedData, setReturnedData] = useState({RunnerID: 0, First: '', Last: '', Email: '', Display: ''});
     const [userCredentials, setUserCredentials] = useState({Email: '', Password: ''});

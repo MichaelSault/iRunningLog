@@ -2,7 +2,7 @@ const toBase64 = obj => {
     // converts the obj to a string
     const str = JSON.stringify (obj);
     // returns string converted to base64
-    return Buffer.from(str).toString ('base64');
+    return Buffer.from(str).toString('base64');
  };
 
 const replaceSpecialChars = b64string => {
@@ -26,18 +26,6 @@ const header = {
     typ: 'JWT',
 };
 
-/* //generates a sample payload
-const payload = {
-    iss: 'data_dog',    //name of the server that issued the token
-    exp: 60*60*24,      // sets to expire in 24hours
-    
-    // example user
-    name: 'James Mitchell',
-    email: 'jmitchell@mail.com',
-    registered: true,
-}; */
-
-
 //import the crypto module
 const crypto = require('crypto');
 const createSignature = (jwtB64Header, jwtB64Payload, secret) => {
@@ -54,7 +42,6 @@ const createSignature = (jwtB64Header, jwtB64Payload, secret) => {
     signature = replaceSpecialChars (signature);
     return signature;
 }
-
 
 const getJWT = async(userData) => {
     //create the header
@@ -79,8 +66,8 @@ const getJWT = async(userData) => {
     }
 
     // converts payload to base64
-    const b64Payload = toBase64 (payload);
-    const jwtB64Payload = replaceSpecialChars (b64Payload);
+    const b64Payload = toBase64(payload);
+    const jwtB64Payload = replaceSpecialChars(b64Payload);
     console.log ("the payload is: ", jwtB64Payload);
 
     //create signature
@@ -96,6 +83,20 @@ const getJWT = async(userData) => {
     return(jasonWebToken);
 }
 
+const decodeJWT = async(JWT) => {
+    const jwt = require('njwt');
+    const token = JWT;
+    const tokenDecodablePart = token.split('.')[1];
+    const decoded = Buffer.from(tokenDecodablePart, 'base64').toString();
+    console.log(decoded);
+
+    //Implement signature verification next
+    //console.log("verifying signature....");
+
+    return(decoded);
+}
+
 module.exports = {
-    getJWT
+    getJWT,
+    decodeJWT
 }

@@ -17,7 +17,8 @@ app.post('/JWT', async(req, res) => {
     //console.log(req.body.Email);
     const JasonWebToken = await JWT.getJWT(req.body);
     console.log("JWT Returned by the function: " + JasonWebToken);
-
+    const decoded = await JWT.decodeJWT(JasonWebToken);
+    console.log("decoded token: " + decoded);
     res.send(JasonWebToken);
 })
 
