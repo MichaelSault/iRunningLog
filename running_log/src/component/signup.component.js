@@ -33,6 +33,17 @@ export default function SignUp() {
     const [newUser, setNewUser] = useState({RunnerID: 0, First: '', Last: '', Email: 0, Display: 0, Password: ""});
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const loggedInUser = document.cookie;
+        console.log(loggedInUser);
+        if (loggedInUser) {
+            navigate("/logrun");
+        } else {
+            console.log("No user logged in");
+        }
+        console.log(loggedInUser);
+    }, []);
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);

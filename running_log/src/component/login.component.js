@@ -33,6 +33,18 @@ export default function LogIn() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const loggedInUser = document.cookie;
+        console.log(loggedInUser);
+        if (loggedInUser) {
+            navigate("/logrun");
+        } else {
+            console.log("No user logged in");
+        }
+        console.log(loggedInUser);
+    }, []);
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);

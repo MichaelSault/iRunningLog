@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { useNavigate } from 'react-router-dom';
+
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
@@ -27,6 +29,19 @@ const darkTheme = createTheme({
 export default function LogRun() {
     const [returnedData, setReturnedData] = useState({RunID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
     const [run, setRun] = useState({RunID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const loggedInUser = document.cookie;
+        console.log(loggedInUser);
+        if (loggedInUser) {
+            console.log("User logged in");
+        } else {
+            navigate("/login");
+        }
+        console.log(loggedInUser);
+    }, []);
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
