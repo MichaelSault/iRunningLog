@@ -1,11 +1,11 @@
 const config = require('./dbConfig'),
     sql = require('mssql');
 
-const createUser = async(NewUserInfo) => {
+const createUser = async(newUserInfo) => {
     try {
         let pool = await sql.connect(config);
-        console.log(NewUserInfo);
-        let newUser = await pool.request().query(`INSERT INTO Runners(First, Last, Email, Display, Password) VALUES ('${NewUserInfo.First}', '${NewUserInfo.Last}', '${NewUserInfo.Email}', '${NewUserInfo.Username}', '${NewUserInfo.Password}')`);
+        console.log(newUserInfo);
+        let newUser = await pool.request().query(`INSERT INTO Runners(First, Last, Email, Display, Password) VALUES ('${newUserInfo.First}', '${newUserInfo.Last}', '${newUserInfo.Email}', '${newUserInfo.Username}', '${newUserInfo.Password}')`);
         return newUser;
     }
     catch(error) {
@@ -30,7 +30,20 @@ const loginUser = async(userCredentials) => {
     }
 }
 
+const logRun = async(newRunData) => {
+    try {
+        let pool = await sql.connect(config);
+        console.log(newRunData);
+        let newRun = await pool.request().query(`INSERT INTO Runs(RunnerID, Title, Date, Distance, Time, Description, Effort) VALUES ('${newRunData.RunnerID}', '${newRunData.Title}', '${newRunData.Date}', '${newRunData.Distance}', '${newRunData.Time}', '${newRunData.Description}', '${newRunData.Effort}')`);
+        return newRun;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    logRun
 }

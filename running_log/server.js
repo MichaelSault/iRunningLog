@@ -34,4 +34,9 @@ app.post('/loginUser', async(req, res) => {
     res.send(result.recordset[0]);
 });
 
+app.post('/logRun', async(req, res) => {
+    const result = await dbOperation.logRun(req.body);
+    console.log(result);
+});
+
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));

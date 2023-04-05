@@ -28,7 +28,7 @@ const darkTheme = createTheme({
 
 export default function LogRun() {
     const [returnedData, setReturnedData] = useState({RunID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
-    const [run, setRun] = useState({RunID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
+    const [run, setRun] = useState({RunnerID: 13, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -54,7 +54,7 @@ export default function LogRun() {
     const setInput = (e) => {
         const {name, value} = e.target;
         console.log(value);
-        if (name === 'RunID' || name === 'Time' || name === 'Distance' || name === 'Effort'){
+        if (name === 'RunID' || name === 'RunnerID' || name === 'Time' || name === 'Distance' || name === 'Effort'){
             setRun(prevState => ({
             ...prevState,
             [name]: parseInt(value)
