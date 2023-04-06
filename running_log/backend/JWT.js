@@ -90,13 +90,41 @@ const decodeJWT = async(JWT) => {
     const decoded = Buffer.from(tokenDecodablePart, 'base64').toString();
     console.log(decoded);
 
-    //Implement signature verification next
-    //console.log("verifying signature....");
-
     return(decoded);
+}
+
+const verifyJWT = async(JWT) => {
+    const signature = JWT.split('.')[2];
+    console.log("Signature to Verify: ", signature);
+    
+    const header = JWT.split('.')[0];
+    console.log("Header: ", header);
+    const decodedHeader = Buffer.from(header, 'base64').toString();
+    console.log("Decoded Header: ", decodedHeader);
+
+    const payload = JWT.split('.')[1];
+    console.log("Payload: ", payload);
+    const decodedPayload = Buffer.from(payload, 'base64').toString();
+    console.log("Decoded Payload: ", decodedPayload);
+
+    //create signature
+    const secret = 'a_secret_to_everyone';
+    const newSignature = createSignature(header, payload, secret);
+    console.log("Signature should be: ", signature);
+    //OUTPUTS the signature is:    bWLt85oF80pZ6QfHF9BjgjvVolR3DD6Mv2ixS47nmHo
+
+    console.log("Verifying Signature...");
+    if (signature === newSignature){
+        console.log("SIGNATURE VALIDATED");
+        return true;
+    }  else {
+        console.log("INVALID SIGNATURE!");
+        return false;
+    }
 }
 
 module.exports = {
     getJWT,
-    decodeJWT
+    decodeJWT,
+    verifyJWT
 }
