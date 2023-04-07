@@ -32,16 +32,34 @@ export default function LogRun() {
     const navigate = useNavigate();
 
     useEffect(() => {
+
         const loggedInUser = document.cookie;
         console.log(loggedInUser);
         if (loggedInUser) {
             console.log("User logged in");
+            decodeJWT(loggedInUser);
         } else {
             navigate("/login");
         }
         console.log(loggedInUser);
     }, []);
 
+
+    const decodeJWT = async (token) => {
+        const tokenData = await fetch('http://localhost:5000/decodeJWT', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            ...token
+        })
+        })
+        .then(res => res.json());
+
+        console.log(tokenData);
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
