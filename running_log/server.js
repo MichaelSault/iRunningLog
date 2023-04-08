@@ -15,10 +15,10 @@ app.use(cors());
 app.post('/decodeJWT', async(req, res) => {
     console.log("JWT to decode: " + req.body);
     const decoded = await JWT.decodeJWT(req.body);
-    console.log("decoded token: " + decoded);
-    console.log(req.body);
-    const validated = await JWT.verifyJWT(req.body);
-    console.log(validated);
+    //console.log("decoded token: " + decoded);
+    //console.log(req.body);
+    //const validated = await JWT.verifyJWT(req.body);
+    //console.log(validated);
     res.send(req.body);
 
 });

@@ -84,13 +84,13 @@ const getJWT = async(userData) => {
 }
 
 const decodeJWT = async(JWT) => {
-    const jwt = require('njwt');
     const token = JWT;
     const tokenDecodablePart = token.split('.')[1];
+    console.log("decodable part: ", tokenDecodablePart);
     const decoded = Buffer.from(tokenDecodablePart, 'base64').toString();
     console.log(decoded);
 
-    return(decoded);
+    return(token);
 }
 
 const verifyJWT = async(JWT) => {

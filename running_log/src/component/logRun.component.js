@@ -33,10 +33,10 @@ export default function LogRun() {
 
     useEffect(() => {
 
-        const loggedInUser = document.cookie;
+        const loggedInUser = document.cookie.split('=')[1];
         console.log(loggedInUser);
         if (loggedInUser) {
-            console.log("User logged in");
+            console.log("User logged in", loggedInUser);
             decodeJWT(loggedInUser);
         } else {
             navigate("/login");
@@ -46,13 +46,14 @@ export default function LogRun() {
 
 
     const decodeJWT = async (token) => {
+        console.log("token: ", token)
         const tokenData = await fetch('http://localhost:5000/decodeJWT', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify({
+        body: ({
             ...token
         })
         })
