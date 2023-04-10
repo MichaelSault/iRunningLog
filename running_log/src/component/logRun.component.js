@@ -53,8 +53,8 @@ export default function LogRun() {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: ({
-            ...token
+        body: JSON.stringify({
+            Token: token
         })
         })
         .then(res => res.json());

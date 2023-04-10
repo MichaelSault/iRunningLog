@@ -13,12 +13,13 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
 app.post('/decodeJWT', async(req, res) => {
-    console.log("JWT to decode: " + req.body);
-    const decoded = await JWT.decodeJWT(req.body);
-    //console.log("decoded token: " + decoded);
-    //console.log(req.body);
-    //const validated = await JWT.verifyJWT(req.body);
-    //console.log(validated);
+    const jwtToVerify = req.body.Token;
+
+    console.log("JWT to decode: " + jwtToVerify);
+    const decoded = await JWT.decodeJWT(jwtToVerify);
+    console.log("decoded token: " + decoded);
+    const validated = await JWT.verifyJWT(jwtToVerify);
+    console.log(validated);
     res.send(req.body);
 
 });
@@ -26,7 +27,7 @@ app.post('/decodeJWT', async(req, res) => {
 
 app.post('/JWT', async(req, res) => {
     //console.log("called JWT on server.js");
-    //console.log(req.body.Email);
+    console.log(req.body.Token);
     const JasonWebToken = await JWT.getJWT(req.body);
     console.log("JWT Returned by the function: " + JasonWebToken);
     const decoded = await JWT.decodeJWT(JasonWebToken);
