@@ -108,7 +108,6 @@ export default function LogIn() {
                     Last: newData.Last,
                     Email: newData.Email,
                     Display: newData.Display,
-                    Password: newData.Password,
                     Registered: true
                 })
             })

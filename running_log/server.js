@@ -12,19 +12,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
-app.post('/decodeJWT', async(req, res) => {
-    const jwtToVerify = req.body.Token;
-
-    console.log("JWT to decode: " + jwtToVerify);
-    const decoded = await JWT.decodeJWT(jwtToVerify);
-    console.log("decoded token: " + decoded);
-    const validated = await JWT.verifyJWT(jwtToVerify);
-    console.log(validated);
-    res.send(req.body);
-
-});
-
-
 app.post('/JWT', async(req, res) => {
     //console.log("called JWT on server.js");
     console.log(req.body.Token);
@@ -38,6 +25,35 @@ app.post('/JWT', async(req, res) => {
     res.send(JasonWebToken);
 
 });
+
+//returns data from JWT payload
+app.post('/decodeJWT', async(req, res) => {
+    //set JWT
+    const jwtToVerify = req.body.Token;
+    //validate JWT
+    const validated = await JWT.verifyJWT(jwtToVerify);
+    console.log(validated);
+    //if valid, decode the payload
+    if (validated){
+        console.log("JWT to decode: " + jwtToVerify);
+        const decoded = await JWT.decodeJWT(jwtToVerify);
+        console.log("decoded token: " + decoded);
+        res.send(decoded);
+    } else {
+        throw new Error("Invalid Signature!");
+    }
+
+});
+
+//returns true if valid JWT
+app.post('/verifyJWT', async(req, res) => {
+    const jwtToVerify = req.body.Token;
+    console.log("JWT to verify: " + jwtToVerify);
+    const validated = await JWT.verifyJWT(jwtToVerify);
+    console.log(validated);
+    res.send(req.body); 
+});
+
 
 app.post('/createUser', async(req, res) => {
     const result = await dbOperation.createUser(req.body);

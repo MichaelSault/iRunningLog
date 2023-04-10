@@ -61,8 +61,7 @@ const getJWT = async(userData) => {
         Last: userData.Last,
         Email: userData.Email,
         Display: userData.Display,
-        Password: userData.Password,
-        registered: userData.Registered,
+        Registered: userData.Registered,
     }
 
     // converts payload to base64
