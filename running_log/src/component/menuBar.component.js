@@ -12,10 +12,51 @@ import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
+import {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorE2, setAnchorE2] = React.useState(null);
+
+  useEffect(() => {
+      const loggedInUser = document.cookie;
+      console.log(loggedInUser);
+      if (loggedInUser) {
+          //verify JWT signature
+          const verified = verifyJWT(loggedInUser);
+          //change menu bar to logged in mode if valid
+          if (verified) {
+            setAuth(true);
+          } else {
+            setAuth(false);
+            Cookies.remove('user-authentication');
+          }
+          //delete token if invalid
+      } else {
+          //menu bar is not logged in version
+      }
+      console.log(loggedInUser);
+  }, []);
+
+  const verifyJWT = async (token) => {
+    console.log("token: ", token)
+    const tokenData = await fetch('http://localhost:5000/decodeJWT', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+        Token: token
+    })
+    })
+    .then(res => res.json());
+
+    console.log(tokenData);
+}
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
