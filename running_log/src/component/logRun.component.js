@@ -27,12 +27,11 @@ const darkTheme = createTheme({
 });
 
 export default function LogRun() {
-    const [returnedData, setReturnedData] = useState({RunID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
+    const [runnerData, setRunnerData] = useState({RunnerID: 0, First: '', Last: '', Email: "", Display: ""});
     const [run, setRun] = useState({RunnerID: 13, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
     const navigate = useNavigate();
 
     useEffect(() => {
-
         const loggedInUser = document.cookie.split('=')[1];
         console.log(loggedInUser);
         if (loggedInUser) {
@@ -59,7 +58,7 @@ export default function LogRun() {
         })
         .then(res => res.json());
 
-        console.log(tokenData);
+        setRunnerData(tokenData);
     }
 
     const handleSubmit = (event) => {
@@ -87,6 +86,8 @@ export default function LogRun() {
     }
 
     const logRun = async () => {
+        console.log(runnerData);
+        setRun({RunnerID: runnerData.RunnerID});
         const newData = await fetch('http://localhost:5000/logrun', {
         method: 'POST',
         headers: {
@@ -99,7 +100,7 @@ export default function LogRun() {
         })
         .then(res => res.json());
         console.log(newData);
-        setReturnedData(newData[0]);
+        //setReturnedData(newData[0]);
     }
 
 

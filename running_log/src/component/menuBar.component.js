@@ -22,7 +22,7 @@ export default function MenuAppBar() {
   const [anchorE2, setAnchorE2] = React.useState(null);
 
   useEffect(() => {
-      const loggedInUser = document.cookie;
+      const loggedInUser = document.cookie.split('=')[1];
       console.log(loggedInUser);
       if (loggedInUser) {
           //verify JWT signature
@@ -43,7 +43,7 @@ export default function MenuAppBar() {
 
   const verifyJWT = async (token) => {
     console.log("token: ", token)
-    const tokenData = await fetch('http://localhost:5000/decodeJWT', {
+    const tokenData = await fetch('http://localhost:5000/verifyJWT', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',

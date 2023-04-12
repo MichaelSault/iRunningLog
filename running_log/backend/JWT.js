@@ -89,7 +89,7 @@ const decodeJWT = async(JWT) => {
     const decoded = Buffer.from(tokenDecodablePart, 'base64').toString();
     console.log(decoded);
 
-    return(token);
+    return(decoded);
 }
 
 const verifyJWT = async(JWT) => {
