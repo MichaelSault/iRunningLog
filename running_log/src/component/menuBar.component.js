@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 export default function MenuAppBar() {
-  const [auth, setAuth] = React.useState(true);
+  const [auth, setAuth] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorE2, setAnchorE2] = React.useState(null);
 
@@ -27,19 +27,20 @@ export default function MenuAppBar() {
       if (loggedInUser) {
           //verify JWT signature
           const verified = verifyJWT(loggedInUser);
+          console.log("menu bar: ", verified);
           //change menu bar to logged in mode if valid
           if (verified) {
             setAuth(true);
           } else {
             setAuth(false);
-            Cookies.remove('user-authentication');
+            //Cookies.remove('user-authentication');
           }
           //delete token if invalid
       } else {
           //menu bar is not logged in version
       }
       console.log(loggedInUser);
-  }, []);
+  }, [auth]);
 
   const verifyJWT = async (token) => {
     console.log("token: ", token)
