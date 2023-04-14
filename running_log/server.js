@@ -12,6 +12,15 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
+
+app.post('/runHistory', async(req, res) => {
+    console.log(req.body);
+    const runnerActivity = await dbOperation.getActivities(req.body);
+    console.log("User activities: ", runnerActivity);
+
+    res.send(runnerActivity);
+})
+
 app.post('/JWT', async(req, res) => {
     //console.log("called JWT on server.js");
     console.log(req.body.Token);

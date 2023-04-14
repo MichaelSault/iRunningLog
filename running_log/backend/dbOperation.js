@@ -13,6 +13,20 @@ const createUser = async(newUserInfo) => {
     }
 }
 
+const getActivities = async(runnerID) => {
+    try {
+        let pool = await sql.connect(config);
+        console.log(runnerID);
+        let returnedUserActivity = await pool.request().query(`SELECT * FROM Runs WHERE RunnerID = '${runnerID}' `);
+        console.log("Returned User Activities ", returnedUserActivity.recordset);
+
+        return returnedUserActivity;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 const loginUser = async(userCredentials) => {
     console.log(userCredentials);
 
@@ -44,6 +58,7 @@ const logRun = async(newRunData) => {
 
 module.exports = {
     createUser,
+    getActivities,
     loginUser,
     logRun
 }

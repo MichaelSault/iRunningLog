@@ -20,7 +20,7 @@ function App() {
         <Route path='/Login' element={<Login />}/>
         <Route path='/SignUp' element={<SignUp />}/>
         <Route path='/LogRun' element={<LogRun />}/>
-        <Route path='/ViewRuns' element={<ViewRuns />}/>
+        <Route path='/Activity' element={<ViewRuns />}/>
         <Route path='/Progress' element={<Progression />}/>
       </Routes>
     </BrowserRouter>
