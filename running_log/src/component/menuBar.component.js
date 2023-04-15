@@ -83,6 +83,8 @@ export default function MenuAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "RebeccaPurple" }}>
         <Toolbar>
+        {!auth && (
+          <div>
           <IconButton
             size="large"
             edge="start"
@@ -93,6 +95,7 @@ export default function MenuAppBar() {
           >
             <MenuIcon />
           </IconButton>
+          
           <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
@@ -111,7 +114,8 @@ export default function MenuAppBar() {
               <MenuItem href="login" component="a" onClick={handleClose}>Login</MenuItem>
               <MenuItem href="signup" component="a" onClick={handleClose}>SignUp</MenuItem>
           </Menu>
-          
+          </div>
+          )}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1}}>
             iRunningLog
           </Typography>
