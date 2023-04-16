@@ -72,7 +72,7 @@ export default function LogRun() {
     const setInput = (e) => {
         const {name, value} = e.target;
         console.log(value);
-        if (name === 'RunID' || name === 'RunnerID' || name === 'Time' || name === 'Distance' || name === 'Effort'){
+        if (name === 'RunID' || name === 'RunnerID' || name === 'Effort'){
             setRun(prevState => ({
             ...prevState,
             [name]: parseInt(value)
