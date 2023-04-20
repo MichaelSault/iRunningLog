@@ -16,8 +16,8 @@ const createUser = async(newUserInfo) => {
 const getActivities = async(runnerID) => {
     try {
         let pool = await sql.connect(config);
-        console.log(runnerID);
-        let returnedUserActivity = await pool.request().query(`SELECT * FROM Runs WHERE RunnerID = '${runnerID}' `);
+        console.log("getActivities", runnerID.Token);
+        let returnedUserActivity = await pool.request().query(`SELECT * FROM Runs WHERE RunnerID = '${runnerID.Token}' `);
         console.log("Returned User Activities ", returnedUserActivity.recordset);
 
         return returnedUserActivity;

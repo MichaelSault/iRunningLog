@@ -25,11 +25,14 @@ const darkTheme = createTheme({
     }
 });
 
+//var userActivityArray = [{RunID: 11, RunnerID: 13, Title: 'Post Practice 5k', Date: '2023-04-13T00:00:00.000Z', Distance: 5.15}];
+
 export default function ViewRuns() {
+    const [userActivityArray, setUserActivityArray] = useState([]);
+
     const navigate = useNavigate();
 
     useEffect(() => {
-
         const loggedInUser = document.cookie.split('=')[1];
         console.log(loggedInUser);
         if (loggedInUser) {
@@ -68,14 +71,33 @@ export default function ViewRuns() {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(token.RunnerID)
-        });
+            body: JSON.stringify({Token: token.RunnerID})
+        })
+        .then(res => res.json());
 
-        console.log(userActivity);
+        console.log(userActivity.recordset[0]);
+
+        var activityArray = createActivityArray(userActivity);
+        setUserActivityArray(activityArray);
+        console.log(activityArray[1]);
+        console.log(userActivityArray);
+    }
+
+    function createActivityArray(userActivity) {
+        console.log("enter array creator");
+        console.log(userActivity.recordset.length);
+        var userActivityArray = [];
+        for (let i=0; i <= userActivity.recordset.length-1; i++) {
+            userActivityArray[i] = userActivity.recordset[i];
+            console.log(userActivityArray[i]);
+        }
+        console.log(userActivityArray);
+
+        return userActivityArray;
     }
 
 
-
+    
 
     return (
         <ThemeProvider theme={darkTheme}>
@@ -93,8 +115,20 @@ export default function ViewRuns() {
                         <DirectionsRunRoundedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Recent Activity
+                        Recent Activity:
                     </Typography>
+
+                    {userActivityArray.length > 0 && (
+                        <>
+                            <h4>{userActivityArray[0].Title}<br/>
+                            {userActivityArray[1].Title}<br/>
+                            {userActivityArray[2].Title}<br/>
+                            {userActivityArray[3].Title}<br/>
+                            {userActivityArray[4].Title}</h4>
+                        </>
+                    )}
+                    
+
                     <Box>
                         
                     </Box>
