@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+
+.smalltext {
+  font-size: xx-small;
+  padding-bottom: 0;
+  font-style: italic;
+  width: 150px;
+}
+
+.distanceTime {
+  /* border: #61dafb;
+  border-style: dashed; */
+  width: 150px;
+}
+
+.activityTable {
+   /* border: #61dafb;
+  border-style: dashed; */
+}
+
+.activityTableDate {
+   /* border: #61dafb;
+  border-style: dashed; */
+  text-align: right;
+  width: 26%;
+}
+
+.activityTableTitle {
+   /* border: #61dafb;
+  border-style: dashed; */
+  width: 74%;
+}

@@ -117,17 +117,48 @@ export default function ViewRuns() {
                     <Typography component="h1" variant="h5">
                         Recent Activity:
                     </Typography>
+                    <br/>
 
-                    {userActivityArray.length > 0 && (
-                        <>
-                            <h4>{userActivityArray[0].Title}<br/>
-                            {userActivityArray[1].Title}<br/>
-                            {userActivityArray[2].Title}<br/>
-                            {userActivityArray[3].Title}<br/>
-                            {userActivityArray[4].Title}</h4>
-                        </>
-                    )}
-                    
+                    <table className='activityTable'>
+                        {userActivityArray.length > 0 && (
+                            <>
+                                {userActivityArray.map((activity, index) => {
+                                    return (
+                                        <>
+                                            <tr>
+                                                <td className='activityTable'>{index+1}.</td>
+                                                <td>
+                                                    <td className='activityTableTitle'><b>{activity.Title}</b></td>
+                                                    <td className='activityTableDate'>{activity.Date.split('T')[0]}</td>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className='activityTable'></td>
+                                                <td className='activityTable'>
+                                                    <td className='smalltext'>Distance</td>
+                                                    
+                                                    <td className='smalltext'>Time</td>
+
+                                                    <td className='smalltext'>Pace</td>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                            <td></td>
+                                                <td >
+                                                    <td className='distanceTime'>{activity.Distance}km</td>
+                                                    
+                                                    <td className='distanceTime'>{activity.Time}</td>
+
+                                                    <td className='distanceTime'>pace /km</td>
+                                                </td>
+                                            </tr>
+                                            <br/>
+                                        </>
+                                    )
+                                })}
+                            </>
+                        )}
+                    </table>
 
                     <Box>
                         
