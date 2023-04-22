@@ -28,7 +28,7 @@ const darkTheme = createTheme({
 
 export default function LogRun() {
     const [runnerData, setRunnerData] = useState({RunnerID: 0, First: '', Last: '', Email: "", Display: ""});
-    const [run, setRun] = useState({RunnerID: 13, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
+    const [run, setRun] = useState({RunnerID: 0, Title: '', Date: '', Time: 0, Distance: 0, Description: "", Effort: 0});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -59,6 +59,7 @@ export default function LogRun() {
         .then(res => res.json());
 
         setRunnerData(tokenData);
+        updateRunnerID(tokenData);
     }
 
     const handleSubmit = (event) => {
@@ -68,6 +69,13 @@ export default function LogRun() {
             title: data.get('title'),
         });
     };
+
+    const updateRunnerID = (tokenData) => {
+        console.log(tokenData.RunnerID);
+        var runner = tokenData.RunnerID;
+        setRun(prevState => ({
+            ...prevState, RunnerID: runner}));
+    }
 
     const setInput = (e) => {
         const {name, value} = e.target;
