@@ -13,17 +13,17 @@ function App() {
 
   return (
     <>
-    <MenuAppBar/>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Login />}/>
-        <Route path='/Login' element={<Login />}/>
-        <Route path='/SignUp' element={<SignUp />}/>
-        <Route path='/LogRun' element={<LogRun />}/>
-        <Route path='/Activity' element={<ViewRuns />}/>
-        <Route path='/Progress' element={<Progression />}/>
-      </Routes>
-    </BrowserRouter>
+      <MenuAppBar/>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Login />}/>
+          <Route path='/Login' element={<Login />}/>
+          <Route path='/SignUp' element={<SignUp />}/>
+          <Route path='/LogRun' element={<LogRun />}/>
+          <Route path='/Activity' element={<ViewRuns />}/>
+          <Route path='/Progress' element={<Progression />}/>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

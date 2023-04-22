@@ -21,6 +21,8 @@ export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorE2, setAnchorE2] = React.useState(null);
 
+  const [runnerData, setRunnerData] = useState([]);
+
   useEffect(() => {
       const loggedInUser = document.cookie.split('=')[1];
       console.log(loggedInUser);
@@ -56,8 +58,29 @@ export default function MenuAppBar() {
     })
     .then(res => res.json());
 
-    console.log(tokenData);
-}
+    console.log("token data contains: ", tokenData);
+
+    decodeJWT(token);
+  }
+
+
+  const decodeJWT = async (token) => {
+    console.log("token: ", token)
+    const runnerData = await fetch('http://localhost:5000/decodeJWT', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            Token: token
+        })
+    })
+    .then(res => res.json());
+
+    console.log("does this run? ", runnerData);
+    setRunnerData(runnerData);
+  }
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -121,6 +144,7 @@ export default function MenuAppBar() {
           </Typography>
           {auth && (
             <div>
+              {runnerData.Display}
               <IconButton
                 size="large"
                 aria-label="account of current user"
