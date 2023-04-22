@@ -67,3 +67,10 @@
   border-style: dashed; */
   width: 74%;
 }
+
+.wide {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.096) !important;
+  border-style: dashed;
+  border-color: #61dafb;
+}

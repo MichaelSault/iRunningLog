@@ -25,12 +25,22 @@ const darkTheme = createTheme({
     }
 });
 
+
+
+
 //var userActivityArray = [{RunID: 11, RunnerID: 13, Title: 'Post Practice 5k', Date: '2023-04-13T00:00:00.000Z', Distance: 5.15}];
 
 export default function ViewRuns() {
     const [userActivityArray, setUserActivityArray] = useState([]);
 
     const navigate = useNavigate();
+
+    function viewActivity(activity){
+        console.log("does this work?");
+        console.log("Test");
+        console.log(activity.activity.RunID);
+        navigate('/ViewActivity/'+ (activity.activity.RunID));
+    }
 
     useEffect(() => {
         const loggedInUser = document.cookie.split('=')[1];
@@ -96,6 +106,7 @@ export default function ViewRuns() {
         return userActivityArray;
     }
 
+    
 
     
 
@@ -151,6 +162,10 @@ export default function ViewRuns() {
 
                                                     <td className='distanceTime'>pace /km</td>
                                                 </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><Button className='wide' onClick={() => viewActivity({activity})}>View Run</Button></td>
                                             </tr>
                                             <br/>
                                         </>

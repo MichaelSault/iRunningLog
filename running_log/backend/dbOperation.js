@@ -17,7 +17,7 @@ const getActivities = async(runnerID) => {
     try {
         let pool = await sql.connect(config);
         console.log("getActivities", runnerID.Token);
-        let returnedUserActivity = await pool.request().query(`SELECT * FROM Runs WHERE RunnerID = '${runnerID.Token}' `);
+        let returnedUserActivity = await pool.request().query(`SELECT * FROM Runs WHERE RunnerID = '${runnerID.Token}' ORDER BY Date Desc`);
         console.log("Returned User Activities ", returnedUserActivity.recordset);
 
         return returnedUserActivity;
