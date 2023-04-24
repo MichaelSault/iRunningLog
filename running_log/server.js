@@ -19,6 +19,14 @@ app.post('/runHistory', async(req, res) => {
     console.log("User activities: ", runnerActivity);
 
     res.send(runnerActivity);
+});
+
+app.post('/getActivity', async(req, res) => {
+    console.log(req.body);
+    const activityData = await dbOperation.getActivities(req.body);
+    console.log("User activities: ", activityData);
+
+    res.send(activityData);
 })
 
 app.post('/JWT', async(req, res) => {

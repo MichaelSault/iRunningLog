@@ -27,6 +27,20 @@ const getActivities = async(runnerID) => {
     }
 }
 
+const getActivity = async(RunID) => {
+    try {
+        let pool = await sql.connect(config);
+        console.log("Display Activity", RunID.Token);
+        let returnedUserActivity = await pool.request().query(`SELECT * FROM Runs WHERE RunID = '${RunID.Token}'`);
+        console.log("Activity Returned ", returnedUserActivity.recordset);
+
+        return returnedUserActivity;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 const loginUser = async(userCredentials) => {
     console.log(userCredentials);
 
@@ -59,6 +73,7 @@ const logRun = async(newRunData) => {
 module.exports = {
     createUser,
     getActivities,
+    getActivity,
     loginUser,
     logRun
 }

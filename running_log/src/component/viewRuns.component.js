@@ -39,7 +39,7 @@ export default function ViewRuns() {
         console.log("does this work?");
         console.log("Test");
         console.log(activity.activity.RunID);
-        navigate('/ViewActivity/'+ (activity.activity.RunID));
+        navigate('/activities/'+ (activity.activity.RunID));
     }
 
     useEffect(() => {
@@ -106,9 +106,6 @@ export default function ViewRuns() {
         return userActivityArray;
     }
 
-    
-
-    
 
     return (
         <ThemeProvider theme={darkTheme}>

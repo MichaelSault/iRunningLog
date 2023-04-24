@@ -172,9 +172,9 @@ export default function MenuAppBar() {
                 open={Boolean(anchorE2)}
                 onClose={handleUserClose}
               >
-                <MenuItem href="LogRun" component="a" onClick={handleUserClose}>Log Run</MenuItem>
-                <MenuItem href="Activity" component="a" onClick={handleUserClose}>Activity</MenuItem>
-                <MenuItem href="Settings" component="a" onClick={handleUserClose}>Settings</MenuItem>
+                <MenuItem href="../LogRun" component="a" onClick={handleUserClose}>Log Run</MenuItem>
+                <MenuItem href="../Activity" component="a" onClick={handleUserClose}>Activity</MenuItem>
+                <MenuItem href="../Settings" component="a" onClick={handleUserClose}>Settings</MenuItem>
               </Menu>
           </div>
           )}

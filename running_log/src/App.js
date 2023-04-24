@@ -6,6 +6,7 @@ import SignUp from './component/signup.component';
 import LogRun from './component/logRun.component';
 import ViewRuns from './component/viewRuns.component';
 import Progression from './component/progression.component';
+import Activities from './component/activities.component';
 
 import MenuAppBar from './component/menuBar.component';
 
@@ -22,6 +23,9 @@ function App() {
           <Route path='/LogRun' element={<LogRun />}/>
           <Route path='/Activity' element={<ViewRuns />}/>
           <Route path='/Progress' element={<Progression />}/>
+          <Route path='/activities'>
+            <Route path=":RunID" element={<Activities/>}/>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
