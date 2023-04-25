@@ -50,10 +50,11 @@
   width: 150px;
 }
 
-.activityTable {
-   /* border: #61dafb;
-  border-style: dashed; */
-}
+/*temp class for testing*/
+/* .activityTable { 
+  border: #61dafb;
+  border-style: dashed;
+} */
 
 .activityTableDate {
    /* border: #61dafb;
@@ -71,6 +72,11 @@
 .wide {
   width: 100%;
   background-color: rgba(255, 255, 255, 0.096) !important;
+  border-style: dashed;
+  border-color: #61dafb;
+}
+
+.outline {
   border-style: dashed;
   border-color: #61dafb;
 }

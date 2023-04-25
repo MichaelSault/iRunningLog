@@ -1,19 +1,14 @@
 import {useState, useEffect} from 'react';
 import '../App.css';
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import DirectionsRunRoundedIcon from '@mui/icons-material/DirectionsRunRounded';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { useParams } from 'react-router-dom';
+import { BorderTop, Padding } from '@mui/icons-material';
 
 const darkTheme = createTheme({
     palette: {
@@ -29,8 +24,7 @@ const darkTheme = createTheme({
 
 
 export default function LogIn() {
-    const [returnedData, setReturnedData] = useState({RunnerID: 0, First: '', Last: '', Email: '', Display: ''});
-    const [userCredentials, setUserCredentials] = useState({Email: '', Password: ''});
+    const [returnedData, setReturnedData] = useState([]);
 
     const navigate = useNavigate();
     let {RunID} = useParams();
@@ -80,13 +74,19 @@ export default function LogIn() {
         })
         .then(res => res.json());
 
-        console.log(activityData.recordset[0]);
+        setActivity(activityData);
+        console.log(activityData);
+    }
+
+    const setActivity = async (activityData) => {
+        setReturnedData(activityData.recordset[0]);
+        console.log(returnedData.Title);
     }
 
 
     return (
         <ThemeProvider theme={darkTheme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="lg">
                 <CssBaseline />
                 <Box
                     sx={{
@@ -96,7 +96,32 @@ export default function LogIn() {
                         alignItems: 'center',
                     }}
                 >
-                {RunID}
+
+                <table className='activityTable' style={{width: '60%'}}>
+                    <tr className='activityTable'>
+                        <p>{returnedData.Date}</p>
+                    </tr>
+                    <tr style={{width: '100%'}}>
+                        <td className='activityTable' style={{width: '100%'}}>
+                            <h1>{returnedData.Title}</h1>
+                        </td>
+                    </tr>
+                    <b>Description: </b>
+                    <tr>
+                        <td className='activityTable' style={{width: '100%'}}><p>{returnedData.Description}</p></td>
+                    </tr>
+                    <tr>
+                        <td className='activityTable' style={{width: '100%'}}>
+                            <td style={{width: '43%'}}><b>Distance: </b>{returnedData.Distance}</td>
+                            <td style={{width: '43%'}}><b>Time: </b> {returnedData.Time}</td>
+                            <td style={{width: '43%'}}><b>Effort: </b> {returnedData.Effort}</td>
+                        </td>
+                    </tr>
+                </table>
+                
+                
+
+                
                 </Box>
             </Container>
         </ThemeProvider>
