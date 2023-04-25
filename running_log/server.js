@@ -23,7 +23,7 @@ app.post('/runHistory', async(req, res) => {
 
 app.post('/getActivity', async(req, res) => {
     console.log(req.body);
-    const activityData = await dbOperation.getActivities(req.body);
+    const activityData = await dbOperation.getActivity(req.body);
     console.log("User activities: ", activityData);
 
     res.send(activityData);
