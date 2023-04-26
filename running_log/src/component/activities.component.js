@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import '../App.css';
+import Button from '@mui/material/Button';
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -8,7 +9,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { useParams } from 'react-router-dom';
-import { BorderTop, Padding } from '@mui/icons-material';
+import { BorderTop, Padding, WidthFull } from '@mui/icons-material';
+import { TextField } from '@mui/material';
 
 const darkTheme = createTheme({
     palette: {
@@ -25,6 +27,7 @@ const darkTheme = createTheme({
 
 export default function LogIn() {
     const [returnedData, setReturnedData] = useState([]);
+    const [comment, setComment] = useState({RunID: 0, RunnerID: 0, Date: '', Comment: ''});
 
     const navigate = useNavigate();
     let {RunID} = useParams();
@@ -83,6 +86,40 @@ export default function LogIn() {
         console.log(returnedData.Title);
     }
 
+    const setInput = (e) => {
+        const {name, value} = e.target;
+        console.log(value);
+        if (name === 'RunID' || name === 'RunnerID' || name === 'Effort'){
+            setComment(prevState => ({
+            ...prevState,
+            [name]: parseInt(value)
+        }));
+        return;
+        }
+        setComment(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    }
+
+    const leaveComment = async () => {
+        console.log(returnedData);
+        setComment({RunID: RunID});
+        const newData = await fetch('http://localhost:5000/setComment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            ...comment
+        })
+        })
+        .then(res => res.json());
+        console.log(newData);
+        //setReturnedData(newData[0]);
+    }
+
 
     return (
         <ThemeProvider theme={darkTheme}>
@@ -118,8 +155,26 @@ export default function LogIn() {
                         </td>
                     </tr>
                 </table>
-                
-                
+                <br/>
+                <div style={{width: '60%'}}>
+                    <TextField
+                        id="outlined-multiline-flexible"
+                        label="Comment on this activity?"
+                        multiline
+                        rows={3}
+                        fullWidth
+                        onChange={setInput}
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={() => leaveComment()}
+                        >
+                        Comment
+                    </Button>
+                </div>
 
                 
                 </Box>

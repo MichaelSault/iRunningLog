@@ -89,4 +89,9 @@ app.post('/logRun', async(req, res) => {
     console.log(result);
 });
 
+app.post('/setComment', async(req, res) => {
+    const result = await dbOperation.setComment(req.body);
+    console.log(result);
+});
+
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));

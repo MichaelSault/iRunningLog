@@ -70,10 +70,23 @@ const logRun = async(newRunData) => {
     }
 }
 
+const setComment = async(commentData) => {
+    try {
+        let pool = await sql.connect(config);
+        console.log(commentData);
+        let newComment = await pool.request().query(`INSERT INTO Comments(RunID, RunnerID, Date, Comment) VALUES ('${commentData.RunID}', '${commentData.RunnerID}', '${commentData.Date}', '${commentData.Comment}')`);
+        return newComment;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     createUser,
     getActivities,
     getActivity,
     loginUser,
-    logRun
+    logRun,
+    setComment
 }
