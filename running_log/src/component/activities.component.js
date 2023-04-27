@@ -29,6 +29,9 @@ export default function LogIn() {
     const [returnedData, setReturnedData] = useState([]);
     const [comment, setComment] = useState({RunID: 0, RunnerID: 0, Date: '', Comment: ''});
 
+    const [commentHistory, setCommentHistory] = useState([]);
+
+
     const navigate = useNavigate();
     let {RunID} = useParams();
     
@@ -120,6 +123,39 @@ export default function LogIn() {
         //setReturnedData(newData[0]);
     }
 
+    const commentHistory = async (token) => {
+        console.log(token.RunnerID);
+        const comments = await fetch('http://localhost:5000/commentHistory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({Token: token.RunnerID})
+        })
+        .then(res => res.json());
+
+        console.log(comments.recordset[0]);
+
+        var commentArray = createCommentArray(comments);
+        createCommentArray(comments);
+        console.log(comments[1]);
+        console.log(commentArray);
+    }
+
+    function createCommentArray(commentArray) {
+        console.log("enter array creator");
+        console.log(commentArray.recordset.length);
+        var commentHistoryArray = [];
+        for (let i=0; i <= commentArray.recordset.length-1; i++) {
+            commentHistoryArray[i] = commentArray.recordset[i];
+            console.log(commentHistoryArray[i]);
+        }
+        console.log(commentHistoryArray);
+
+        return commentHistoryArray;
+    }
+
 
     return (
         <ThemeProvider theme={darkTheme}>
@@ -175,6 +211,51 @@ export default function LogIn() {
                         Comment
                     </Button>
                 </div>
+
+                <table className='activityTable'>
+                    {commentArray.length > 0 && (
+                        <>
+                            {commentArray.map((activity, index) => {
+                                return (
+                                    <>
+                                        <tr>
+                                            <td className='activityTable'>{index+1}.</td>
+                                            <td>
+                                                <td className='activityTableTitle'><b>{comment.Title}</b></td>
+                                                <td className='activityTableDate'>{comment.Date.split('T')[0]}</td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className='activityTable'></td>
+                                            <td className='activityTable'>
+                                                <td className='smalltext'>Distance</td>
+                                                
+                                                <td className='smalltext'>Time</td>
+
+                                                <td className='smalltext'>Pace</td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                        <td></td>
+                                            <td >
+                                                <td className='distanceTime'>{comment.Distance}km</td>
+                                                
+                                                <td className='distanceTime'>{comment.Time}</td>
+
+                                                <td className='distanceTime'>pace /km</td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><Button className='wide' onClick={() => viewComments({comment})}>View Run</Button></td>
+                                        </tr>
+                                        <br/>
+                                    </>
+                                )
+                            })}
+                        </>
+                    )}
+                </table>
 
                 
                 </Box>
