@@ -41,6 +41,20 @@ const getActivity = async(RunID) => {
     }
 }
 
+const getComments = async(RunID) => {
+    try {
+        let pool = await sql.connect(config);
+        console.log("getComments", RunID.Token);
+        let returnedComments = await pool.request().query(`SELECT * FROM Comments WHERE RunID = '${RunID.Token}' ORDER BY Date Desc`);
+        console.log("Returned Run Comments ", returnedComments.recordset);
+
+        return returnedComments;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 const loginUser = async(userCredentials) => {
     console.log(userCredentials);
 
@@ -86,6 +100,7 @@ module.exports = {
     createUser,
     getActivities,
     getActivity,
+    getComments,
     loginUser,
     logRun,
     setComment

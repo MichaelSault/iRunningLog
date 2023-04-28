@@ -29,7 +29,7 @@ export default function LogIn() {
     const [returnedData, setReturnedData] = useState([]);
     const [comment, setComment] = useState({RunID: 0, RunnerID: 0, Date: '', Comment: ''});
 
-    const [commentHistory, setCommentHistory] = useState([]);
+    const [commentHistoryArray, setCommentHistoryArray] = useState([]);
 
 
     const navigate = useNavigate();
@@ -82,6 +82,8 @@ export default function LogIn() {
 
         setActivity(activityData);
         console.log(activityData);
+        console.log(RunID);
+        commentHistory(RunID);
     }
 
     const setActivity = async (activityData) => {
@@ -124,14 +126,16 @@ export default function LogIn() {
     }
 
     const commentHistory = async (token) => {
-        console.log(token.RunnerID);
+        console.log(token);
         const comments = await fetch('http://localhost:5000/commentHistory', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify({Token: token.RunnerID})
+            body: JSON.stringify({
+                Token: token
+            })
         })
         .then(res => res.json());
 
@@ -213,9 +217,9 @@ export default function LogIn() {
                 </div>
 
                 <table className='activityTable'>
-                    {commentArray.length > 0 && (
+                    {commentHistoryArray.length > 0 && (
                         <>
-                            {commentArray.map((activity, index) => {
+                            {commentHistoryArray.map((comment, index) => {
                                 return (
                                     <>
                                         <tr>
@@ -244,10 +248,6 @@ export default function LogIn() {
 
                                                 <td className='distanceTime'>pace /km</td>
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td><Button className='wide' onClick={() => viewComments({comment})}>View Run</Button></td>
                                         </tr>
                                         <br/>
                                     </>
