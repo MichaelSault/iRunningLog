@@ -12,36 +12,9 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
-
-app.post('/runHistory', async(req, res) => {
-    console.log(req.body);
-    const runnerActivity = await dbOperation.getActivities(req.body);
-    console.log("User activities: ", runnerActivity);
-
-    res.send(runnerActivity);
-});
-
-app.post('/getActivity', async(req, res) => {
-    console.log(req.body);
-    const activityData = await dbOperation.getActivity(req.body);
-    console.log("User activities: ", activityData);
-
-    res.send(activityData);
-})
-
-app.post('/JWT', async(req, res) => {
-    //console.log("called JWT on server.js");
-    console.log(req.body.Token);
-    const JasonWebToken = await JWT.getJWT(req.body);
-    console.log("JWT Returned by the function: " + JasonWebToken);
-    const decoded = await JWT.decodeJWT(JasonWebToken);
-    console.log("decoded token: " + decoded);
-    console.log(req.body);
-    const validated = await JWT.verifyJWT(JasonWebToken);
-    console.log(validated);
-    res.send(JasonWebToken);
-
-});
+////////////////////////////////////////////////////
+////////////////JWT Functions///////////////////////
+////////////////////////////////////////////////////
 
 //returns data from JWT payload
 app.post('/decodeJWT', async(req, res) => {
@@ -59,6 +32,19 @@ app.post('/decodeJWT', async(req, res) => {
     } else {
         throw new Error("Invalid Signature!");
     }
+});
+
+app.post('/JWT', async(req, res) => {
+    //console.log("called JWT on server.js");
+    console.log(req.body.Token);
+    const JasonWebToken = await JWT.getJWT(req.body);
+    console.log("JWT Returned by the function: " + JasonWebToken);
+    const decoded = await JWT.decodeJWT(JasonWebToken);
+    console.log("decoded token: " + decoded);
+    console.log(req.body);
+    const validated = await JWT.verifyJWT(JasonWebToken);
+    console.log(validated);
+    res.send(JasonWebToken);
 
 });
 
@@ -71,17 +57,12 @@ app.post('/verifyJWT', async(req, res) => {
     res.send(req.body); 
 });
 
-
+////////////////////////////////////////////////////
+////////////////Setter Functions////////////////////
+////////////////////////////////////////////////////
 app.post('/createUser', async(req, res) => {
     const result = await dbOperation.createUser(req.body);
     console.log(result);
-});
-
-app.post('/loginUser', async(req, res) => {
-    const result = await dbOperation.loginUser(req.body);
-    console.log("Returned From Query");
-    console.log(result.recordset[0]);
-    res.send(result.recordset[0]);
 });
 
 app.post('/logRun', async(req, res) => {
@@ -94,6 +75,33 @@ app.post('/setComment', async(req, res) => {
     console.log(result);
 });
 
+
+////////////////////////////////////////////////////
+///////////////////Get Functions////////////////////
+////////////////////////////////////////////////////
+app.post('/getActivity', async(req, res) => {
+    console.log(req.body);
+    const activityData = await dbOperation.getActivity(req.body);
+    console.log("User activities: ", activityData);
+
+    res.send(activityData);
+});
+
+app.post('/runHistory', async(req, res) => {
+    console.log(req.body);
+    const runnerActivity = await dbOperation.getActivities(req.body);
+    console.log("User activities: ", runnerActivity);
+
+    res.send(runnerActivity);
+});
+
+app.post('/loginUser', async(req, res) => {
+    const result = await dbOperation.loginUser(req.body);
+    console.log("Returned From Query");
+    console.log(result.recordset[0]);
+    res.send(result.recordset[0]);
+});
+
 app.post('/commentHistory', async(req, res) => {
     console.log(req.body);
     const activityComments = await dbOperation.getComments(req.body);
@@ -101,5 +109,7 @@ app.post('/commentHistory', async(req, res) => {
 
     res.send(activityComments);
 });
+
+
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
