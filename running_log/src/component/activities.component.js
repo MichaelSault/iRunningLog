@@ -11,6 +11,9 @@ import Cookies from 'universal-cookie';
 import { useParams } from 'react-router-dom';
 import { BorderTop, Padding, WidthFull } from '@mui/icons-material';
 import { TextField } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import DirectionsRunRoundedIcon from '@mui/icons-material/DirectionsRunRounded';
+import Typography from '@mui/material/Typography';
 
 const darkTheme = createTheme({
     palette: {
@@ -173,16 +176,19 @@ export default function LogIn() {
                         alignItems: 'center',
                     }}
                 >
+                
+                <Avatar sx={{ m: 1, bgcolor: 'RebeccaPurple', color: 'white', fontSize: 'large' }}>
+                    <DirectionsRunRoundedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    {returnedData.Title}
+                </Typography>
 
                 <table className='activityTable' style={{width: '60%'}}>
                     <tr className='activityTable'>
                         <p>{returnedData.Date}</p>
                     </tr>
-                    <tr style={{width: '100%'}}>
-                        <td className='activityTable' style={{width: '100%'}}>
-                            <h1>{returnedData.Title}</h1>
-                        </td>
-                    </tr>
+
                     <b>Description: </b>
                     <tr>
                         <td className='activityTable' style={{width: '100%'}}><p>{returnedData.Description}</p></td>
