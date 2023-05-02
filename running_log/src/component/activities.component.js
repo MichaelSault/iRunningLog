@@ -112,7 +112,8 @@ export default function LogIn() {
 
     const leaveComment = async () => {
         console.log(returnedData);
-        setComment({RunID: RunID});
+        setComment({RunID: returnedData.RunID});
+        console.log(returnedData.RunID);
         const newData = await fetch('http://localhost:5000/setComment', {
         method: 'POST',
         headers: {
@@ -125,7 +126,7 @@ export default function LogIn() {
         })
         .then(res => res.json());
         console.log(newData);
-        //setReturnedData(newData[0]);
+        setReturnedData(newData[0]);
     }
 
     const commentHistory = async (token) => {
@@ -204,6 +205,7 @@ export default function LogIn() {
                 <br/>
                 <div style={{width: '60%'}}>
                     <TextField
+                        name='comment'
                         id="outlined-multiline-flexible"
                         label="Comment on this activity?"
                         multiline

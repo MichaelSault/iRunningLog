@@ -71,6 +71,7 @@ app.post('/logRun', async(req, res) => {
 });
 
 app.post('/setComment', async(req, res) => {
+    console.log(req.body);
     const result = await dbOperation.setComment(req.body);
     console.log(result);
 });
