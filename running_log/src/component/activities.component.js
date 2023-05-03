@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { useParams } from 'react-router-dom';
 import { BorderTop, Padding, WidthFull } from '@mui/icons-material';
@@ -37,6 +37,7 @@ export default function LogIn() {
 
     const navigate = useNavigate();
     let {RunID} = useParams();
+    
     
 
     useEffect(() => {
@@ -104,16 +105,18 @@ export default function LogIn() {
         }));
         return;
         }
-        setComment(prevState => ({
+        setComment(prevState => ({ //should move the other vars to another function that doesn't run every time
             ...prevState,
+            RunID: returnedData.RunID,
+            RunnerID: returnedData.RunnerID,
+            Date: returnedData.Date,
             [name]: value
         }));
     }
 
     const leaveComment = async () => {
-        console.log(returnedData);
-        setComment({RunID: returnedData.RunID});
-        console.log(returnedData.RunID);
+        //await generateComment(RunID);
+        console.log(comment);
         const newData = await fetch('http://localhost:5000/setComment', {
         method: 'POST',
         headers: {
@@ -127,6 +130,8 @@ export default function LogIn() {
         .then(res => res.json());
         console.log(newData);
         setReturnedData(newData[0]);
+
+        console.log(comment);
     }
 
     const commentHistory = async (token) => {
@@ -205,7 +210,7 @@ export default function LogIn() {
                 <br/>
                 <div style={{width: '60%'}}>
                     <TextField
-                        name='comment'
+                        name='Comment'
                         id="outlined-multiline-flexible"
                         label="Comment on this activity?"
                         multiline

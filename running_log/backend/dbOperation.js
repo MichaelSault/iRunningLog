@@ -88,7 +88,7 @@ const setComment = async(commentData) => {
     try {
         let pool = await sql.connect(config);
         console.log(commentData);
-        let newComment = await pool.request().query(`INSERT INTO Comments(RunID, RunnerID, Date, Comment) VALUES ('${commentData.RunID}', '${commentData.RunnerID}', '${commentData.Date}', '${commentData.Comment}')`);
+        let newComment = await pool.request().query(`INSERT INTO Comments(RunID, RunnerID, Date, Comment) VALUES ('${commentData.RunID}', 13, '2023-05-02 00:00:00', '${commentData.Comment}')`);
         return newComment;
     }
     catch(error) {
