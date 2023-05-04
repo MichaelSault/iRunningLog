@@ -151,22 +151,25 @@ export default function LogIn() {
         console.log(comments.recordset[0]);
 
         var commentArray = createCommentArray(comments);
-        createCommentArray(comments);
-        console.log(comments[1]);
-        console.log(commentArray);
+        setCommentHistoryArray(commentArray);
+
+        console.log(commentArray[1]);
+        console.log(commentHistoryArray);
     }
 
     function createCommentArray(commentArray) {
         console.log("enter array creator");
         console.log(commentArray.recordset.length);
-        var commentHistoryArray = [];
+        var commentHistory = [];
         for (let i=0; i <= commentArray.recordset.length-1; i++) {
-            commentHistoryArray[i] = commentArray.recordset[i];
-            console.log(commentHistoryArray[i]);
+            commentHistory[i] = commentArray.recordset[i];
+            console.log(commentHistory[i]);
         }
-        console.log(commentHistoryArray);
+        console.log(commentHistory);
 
-        return commentHistoryArray;
+        console.log(commentHistoryArray.length);
+
+        return commentHistory;
     }
 
 
@@ -238,28 +241,24 @@ export default function LogIn() {
                                         <tr>
                                             <td className='activityTable'>{index+1}.</td>
                                             <td>
-                                                <td className='activityTableTitle'><b>{comment.Title}</b></td>
-                                                <td className='activityTableDate'>{comment.Date.split('T')[0]}</td>
+                                                <td className='activityTableTitle'><b>{comment.Date.split('T')[0]}</b></td>
+                                                <td className='activityTableDate'>{comment.Date.split('T')[1]}</td>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td className='activityTable'></td>
                                             <td className='activityTable'>
-                                                <td className='smalltext'>Distance</td>
-                                                
-                                                <td className='smalltext'>Time</td>
-
-                                                <td className='smalltext'>Pace</td>
+                                                {comment.Comment}
                                             </td>
                                         </tr>
                                         <tr>
                                         <td></td>
                                             <td >
-                                                <td className='distanceTime'>{comment.Distance}km</td>
+                                                <td className='distanceTime'>RunnerID: {comment.RunnerID}</td>
                                                 
-                                                <td className='distanceTime'>{comment.Time}</td>
+                                                <td className='distanceTime'></td>
 
-                                                <td className='distanceTime'>pace /km</td>
+                                                <td className='distanceTime'></td>
                                             </td>
                                         </tr>
                                         <br/>
