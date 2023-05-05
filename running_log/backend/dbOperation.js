@@ -55,6 +55,18 @@ const getComments = async(RunID) => {
     }
 }
 
+const getActivityLikes = async(RunID) => {
+    try {
+        let pool = await sql.connect(config);
+        let returnedActivityLikes = await pool.request().query(`SELECT * FROM Likes WHERE RunID = '${RunID.Token}'`);
+
+        return returnedActivityLikes;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 const loginUser = async(userCredentials) => {
     console.log(userCredentials);
 
@@ -96,12 +108,25 @@ const setComment = async(commentData) => {
     }
 }
 
+const setLike = async(likeData) => {
+    try {
+        let pool = await sql.connect(config);
+        let newLike = await pool.request().query(`INSERT INTO Likes(RunID, RunnerID) VALUES ('${likeData.RunID}', '${likeData.RunnerID})`);
+        return newLike;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     createUser,
     getActivities,
     getActivity,
     getComments,
+    getActivityLikes,
     loginUser,
     logRun,
-    setComment
+    setComment,
+    setLike
 }

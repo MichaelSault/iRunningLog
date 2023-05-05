@@ -76,6 +76,12 @@ app.post('/setComment', async(req, res) => {
     console.log(result);
 });
 
+app.post('/setLike', async(req, res) => {
+    console.log(req.body);
+    const newLike = await dbOperation.setLike(req.body);
+    console.log(newLike);
+});
+
 
 ////////////////////////////////////////////////////
 ///////////////////Get Functions////////////////////
@@ -109,6 +115,12 @@ app.post('/commentHistory', async(req, res) => {
     console.log("Activity Comments: ", activityComments);
 
     res.send(activityComments);
+});
+
+app.post('/getActivityLikes', async(req, res) => {
+    const activityLikes = await dbOperation.getActivityLikes(req.body);
+
+    res.send(activityLikes);
 });
 
 
