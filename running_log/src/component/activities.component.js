@@ -32,6 +32,8 @@ export default function LogIn() {
     const [returnedData, setReturnedData] = useState([]);
     const [comment, setComment] = useState({RunID: 0, RunnerID: 0, Date: '', Comment: ''});
 
+    const [userData, setUserData] = useState({RunnerID: 0, First: '', Last: ''});
+
     const [commentHistoryArray, setCommentHistoryArray] = useState([]);
 
 
@@ -65,7 +67,7 @@ export default function LogIn() {
             })
         })
         .then(res => res.json());
-
+        setUserData(tokenData.RunnerID);
         console.log(tokenData);
         getActivity(RunID);
     }
@@ -170,6 +172,27 @@ export default function LogIn() {
         console.log(commentHistoryArray.length);
 
         return commentHistory;
+    }
+
+    const leaveLike = async () => {
+        //await generateComment(RunID);
+        console.log(comment);
+        const newLike = await fetch('http://localhost:5000/setLike', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            RunID: RunID,
+            RunnerID: userData.RunnerID
+        })
+        })
+        .then(res => res.json());
+        console.log(newLike);
+        setReturnedData(newLike[0]);
+
+        console.log(comment);
     }
 
 
