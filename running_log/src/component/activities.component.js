@@ -218,7 +218,9 @@ export default function LogIn() {
 
                 <table className='activityTable' style={{width: '60%'}}>
                     <tr className='activityTable'>
-                        <p>{returnedData.Date}</p>
+                        <td><p>{returnedData.Date}</p></td>
+                        <td><button onClick={() => leaveLike()}>Like!</button></td>
+                        
                     </tr>
 
                     <b>Description: </b>
