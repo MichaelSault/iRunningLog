@@ -31,6 +31,7 @@ const darkTheme = createTheme({
 export default function LogIn() {
     const [returnedData, setReturnedData] = useState([]);
     const [comment, setComment] = useState({RunID: 0, RunnerID: 0, Date: '', Comment: ''});
+    const [isLiked, setIsLiked] = useState({Liked: false});
 
     const [userData, setUserData] = useState({RunnerID: 0, First: '', Last: ''});
 
@@ -220,7 +221,19 @@ export default function LogIn() {
                     <tr className='activityTable'>
                         <td><p>{returnedData.Date}</p></td>
                         <td><button onClick={() => leaveLike()}>Like!</button></td>
-                        
+                        {isLiked.Liked && (
+                            <>
+                                <b>Liked!</b>
+                            </>
+                            
+                        )}
+                        {!isLiked.Liked && (
+                            <>
+                                Like?
+                            </>
+                            
+                        )}
+
                     </tr>
 
                     <b>Description: </b>
